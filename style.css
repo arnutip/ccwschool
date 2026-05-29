@@ -1,383 +1,150 @@
+﻿:root {
+  --samsung-blue: #1428A0;
+  --samsung-light: #eaf0ff;
+  --white: #ffffff;
+  --text-main: #0f172a;
+  --text-sub: #4b5a82;
+  --border: #d9e3ff;
+}
+
 * {
   box-sizing: border-box;
 }
 
-:root {
-  --samsung-blue: #1428A0;
-  --samsung-blue-dark: #0f207f;
-  --bg: #f7f9ff;
-  --card: #ffffff;
-  --soft-blue: #eef3ff;
-  --line: #dfe6f5;
-  --text: #111111;
-  --muted: #5f6573;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   margin: 0;
-  font-family: Arial, "Noto Sans Thai", sans-serif;
-  background:
-    radial-gradient(circle at top right, rgba(20,40,160,.12), transparent 32rem),
-    var(--bg);
-  color: var(--text);
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  border-bottom: 1px solid var(--line);
-  background: rgba(255,255,255,.86);
-  backdrop-filter: blur(18px);
-}
-
-.nav {
-  max-width: 1120px;
-  margin: auto;
-  padding: 14px 20px;
+  min-height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.brand-icon {
-  width: 42px;
-  height: 42px;
-  border-radius: 999px;
-  background: var(--samsung-blue);
-  color: white;
-  display: grid;
-  place-items: center;
-  font-weight: 800;
-}
-
-.brand strong,
-.brand small {
-  display: block;
-}
-
-.brand small {
-  color: var(--muted);
-  font-size: 12px;
-  margin-top: 2px;
-}
-
-.nav-links {
-  display: flex;
-  gap: 24px;
-  font-size: 14px;
-  color: var(--muted);
-}
-
-.nav-button,
-.primary-button {
-  background: var(--samsung-blue);
-  color: white;
-  padding: 12px 20px;
-  border-radius: 999px;
-  font-weight: 700;
-  transition: .2s;
-}
-
-.nav-button:hover,
-.primary-button:hover {
-  background: var(--samsung-blue-dark);
-  transform: translateY(-1px);
-}
-
-main {
-  max-width: 1120px;
-  margin: auto;
-  padding: 32px 20px 56px;
-}
-
-.hero {
-  background: white;
-  border: 1px solid var(--line);
-  border-radius: 38px;
-  padding: 56px;
-  display: grid;
-  grid-template-columns: 1.1fr .9fr;
-  gap: 36px;
-  align-items: center;
-  box-shadow: 0 24px 80px rgba(20,40,160,.08);
-}
-
-.pill,
-.update-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--soft-blue);
-  color: var(--samsung-blue);
-  padding: 9px 16px;
-  border-radius: 999px;
-  font-weight: 700;
-  font-size: 14px;
-}
-
-h1 {
-  margin: 22px 0 16px;
-  font-size: clamp(38px, 6vw, 72px);
-  line-height: .95;
-  letter-spacing: -0.055em;
-}
-
-.hero p {
-  color: var(--muted);
-  font-size: 18px;
-  line-height: 1.8;
-  max-width: 620px;
-}
-
-.hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 28px;
-}
-
-.secondary-button {
-  border: 1px solid var(--line);
-  background: white;
-  padding: 12px 20px;
-  border-radius: 999px;
-  font-weight: 700;
-}
-
-.phone-preview {
-  display: flex;
   justify-content: center;
+  padding: 24px 12px;
+  font-family: "Noto Sans Thai", "Segoe UI", Tahoma, sans-serif;
+  background: linear-gradient(180deg, #f3f7ff 0%, #dfe8ff 100%);
+  color: var(--text-main);
 }
 
 .phone-frame {
-  width: 320px;
-  border-radius: 38px;
-  background: #111;
-  padding: 12px;
-  box-shadow: 0 30px 80px rgba(17,17,17,.25);
+  width: 100%;
+  max-width: 420px;
+  background: #0c0c0f;
+  border-radius: 48px;
+  padding: 14px;
+  box-shadow: 0 24px 60px rgba(10, 19, 61, 0.25);
 }
 
 .phone-screen {
-  background: white;
-  border-radius: 30px;
-  padding: 18px;
+  background: var(--white);
+  border-radius: 34px;
+  min-height: 700px;
+  padding: 24px 18px 20px;
+  overflow: hidden;
 }
 
-.phone-bar {
-  width: 62px;
-  height: 6px;
-  margin: 0 auto 18px;
-  background: #d7deec;
+.speaker {
+  width: 88px;
+  height: 8px;
   border-radius: 999px;
+  margin: 4px auto 18px;
+  background: #d3dbf3;
 }
 
-.phone-card {
-  background: var(--soft-blue);
-  border-radius: 26px;
+.hero {
+  background: var(--samsung-light);
+  border: 1px solid var(--border);
+  border-radius: 22px;
   padding: 18px;
+  margin-bottom: 16px;
 }
 
-.phone-card small,
-.phone-card p {
-  color: var(--muted);
+.hero h1 {
+  margin: 0 0 8px;
+  font-size: 30px;
+  line-height: 1.2;
+  color: var(--samsung-blue);
 }
 
-.phone-card h3 {
-  margin: 6px 0;
-  font-size: 22px;
+.hero p {
+  margin: 0;
+  color: var(--text-sub);
+  font-size: 18px;
+  line-height: 1.4;
 }
 
-.phone-list {
-  margin-top: 14px;
+.menu-list {
   display: grid;
   gap: 12px;
 }
 
-.phone-list a {
-  background: #fbfcff;
-  border: 1px solid #e5eaf5;
-  border-radius: 18px;
-  padding: 14px;
-  font-weight: 700;
-  display: flex;
-  justify-content: space-between;
-}
-
-.section {
-  margin-top: 34px;
-}
-
-.section-title {
-  margin-bottom: 18px;
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-  gap: 16px;
-}
-
-.section-title small {
-  color: var(--samsung-blue);
-  font-weight: 800;
-}
-
-.section-title h2,
-.notice h2,
-.contact h2 {
-  margin: 6px 0 0;
-  font-size: 34px;
-  letter-spacing: -0.035em;
-}
-
-.menu-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-}
-
-.menu-card {
-  background: white;
-  border: 1px solid var(--line);
-  border-radius: 30px;
-  padding: 24px;
-  min-height: 220px;
-  transition: .22s ease;
-  box-shadow: 0 10px 34px rgba(20,40,160,.05);
-}
-
-.menu-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 48px rgba(20,40,160,.12);
-}
-
-.icon {
-  width: 54px;
-  height: 54px;
-  border-radius: 999px;
-  background: var(--soft-blue);
-  display: grid;
-  place-items: center;
-  font-size: 24px;
-  margin-bottom: 18px;
-}
-
-.menu-card span {
-  display: inline-block;
-  background: var(--soft-blue);
-  color: var(--samsung-blue);
-  border-radius: 999px;
-  padding: 6px 12px;
-  font-size: 12px;
-  font-weight: 800;
-}
-
-.menu-card h3 {
-  margin: 16px 0 8px;
-  font-size: 20px;
-}
-
-.menu-card p {
-  color: var(--muted);
-  line-height: 1.7;
-}
-
-.menu-card strong {
-  color: var(--samsung-blue);
-}
-
-.notice {
-  margin-top: 34px;
-  background: var(--samsung-blue);
-  color: white;
-  border-radius: 34px;
-  padding: 36px;
+.menu-item {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--white);
+  color: var(--text-main);
+  text-decoration: none;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 22px;
+  gap: 10px;
+  padding: 14px 14px;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
 }
 
-.notice small,
-.notice p {
-  color: #dbe7ff;
+.menu-item:hover,
+.menu-item:focus-visible {
+  border-color: var(--samsung-blue);
+  box-shadow: 0 10px 20px rgba(20, 40, 160, 0.14);
+  transform: translateY(-2px);
+  outline: none;
 }
 
-.notice p {
-  line-height: 1.8;
+.menu-item .name {
+  flex: 1;
+  text-align: left;
+  line-height: 1.3;
 }
 
-.notice-button {
-  background: white;
+.menu-item .arrow {
   color: var(--samsung-blue);
-  padding: 13px 20px;
-  border-radius: 999px;
-  font-weight: 800;
-  white-space: nowrap;
-}
-
-.contact {
-  text-align: center;
-  margin-top: 34px;
-  padding: 36px;
-  background: white;
-  border: 1px solid var(--line);
-  border-radius: 30px;
-}
-
-.contact p {
-  color: var(--muted);
+  font-size: 20px;
+  font-weight: 900;
 }
 
 .hint {
-  font-size: 14px;
-}
-
-footer {
+  margin-top: 14px;
   text-align: center;
-  color: var(--muted);
-  padding: 26px 20px 44px;
-  font-size: 14px;
+  color: #5c6b91;
+  font-size: 13px;
 }
 
-@media (max-width: 860px) {
-  .nav-links,
-  .nav-button {
-    display: none;
-  }
-
-  .hero {
-    grid-template-columns: 1fr;
-    padding: 30px;
-  }
-
-  .menu-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .section-title,
-  .notice {
-    align-items: flex-start;
-    flex-direction: column;
+@media (max-width: 520px) {
+  body {
+    padding: 0;
+    background: #0c0c0f;
   }
 
   .phone-frame {
-    width: 100%;
-    max-width: 320px;
+    max-width: none;
+    min-height: 100vh;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .phone-screen {
+    min-height: 100vh;
+    border-radius: 0;
+  }
+
+  .hero h1 {
+    font-size: 26px;
+  }
+
+  .hero p,
+  .menu-item {
+    font-size: 16px;
   }
 }
