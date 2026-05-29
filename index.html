@@ -1,150 +1,530 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>School Work Portal | ระบบงานโรงเรียน</title>
-  <meta name="description" content="ระบบรวมลิงก์สำหรับนักเรียนและครู ใช้งานได้ทุกอุปกรณ์" />
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>บันทึก PA · ปีงบประมาณ 2569</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&family=Noto+Serif+Thai:wght@500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #f8f5f1;
+  --surface: #ffffff;
+  --border: #e0d9d0;
+  --border-dark: #c8bfb3;
+  --brown: #7c5c3e;
+  --brown-light: #a07850;
+  --brown-pale: #f0e8de;
+  --text: #2c2420;
+  --text-mid: #6b5c50;
+  --text-muted: #a09080;
+  --grey: #f0ede8;
+  --green: #4a7c5e;
+  --red: #9b3a2e;
+}
+
+body {
+  font-family: 'Sarabun', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.top-bar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 20px 32px;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.top-bar h1 {
+  font-family: 'Noto Serif Thai', serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--brown);
+}
+.top-bar .sub { font-size: 13px; color: var(--text-muted); }
+.year-tag {
+  margin-left: auto;
+  font-size: 12px; font-weight: 600;
+  color: var(--brown);
+  background: var(--brown-pale);
+  border: 1px solid #d9c8b4;
+  padding: 3px 12px; border-radius: 20px;
+}
+
+.wrapper {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 36px 20px 80px;
+}
+
+.tabs {
+  display: flex;
+  border-bottom: 1.5px solid var(--border);
+  margin-bottom: 32px;
+}
+.tab {
+  background: none; border: none;
+  font-family: 'Sarabun', sans-serif;
+  font-size: 14px; color: var(--text-muted);
+  padding: 10px 0; margin-right: 28px;
+  cursor: pointer; position: relative;
+  transition: color 0.2s;
+}
+.tab::after {
+  content: ''; position: absolute;
+  bottom: -1.5px; left: 0; right: 0;
+  height: 2px; background: var(--brown);
+  transform: scaleX(0); transition: transform 0.2s; border-radius: 2px;
+}
+.tab.active { color: var(--brown); font-weight: 600; }
+.tab.active::after { transform: scaleX(1); }
+
+.section { margin-bottom: 32px; }
+.section-label {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text-muted); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+.row { display: grid; gap: 14px; margin-bottom: 14px; }
+.row.col2 { grid-template-columns: 1fr 1fr; }
+.row.col3 { grid-template-columns: 1fr 1fr 1fr; }
+.row.col1 { grid-template-columns: 1fr; }
+.field { display: flex; flex-direction: column; gap: 5px; }
+
+label { font-size: 12px; font-weight: 600; color: var(--text-mid); letter-spacing: 0.02em; }
+label .opt { font-weight: 400; color: var(--text-muted); margin-left: 4px; }
+
+input[type="text"],
+input[type="number"],
+select {
+  font-family: 'Sarabun', sans-serif;
+  font-size: 14px; color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border-dark);
+  border-radius: 8px; padding: 9px 12px;
+  width: 100%;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  outline: none; -webkit-appearance: none;
+}
+input:focus, select:focus {
+  border-color: var(--brown-light);
+  box-shadow: 0 0 0 3px rgba(160,120,80,0.12);
+}
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23a09080' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 30px;
+}
+
+.pa-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px; margin-bottom: 10px;
+  transition: border-color 0.2s;
+  animation: fadeIn 0.2s ease;
+}
+.pa-block:hover { border-color: var(--border-dark); }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.pa-block-header {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
+}
+.pa-num {
+  font-size: 11px; font-weight: 600; color: var(--brown);
+  background: var(--brown-pale); border: 1px solid #d9c8b4;
+  padding: 2px 9px; border-radius: 20px; letter-spacing: 0.04em;
+}
+.btn-remove {
+  margin-left: auto; background: none; border: none;
+  color: var(--text-muted); cursor: pointer;
+  font-size: 20px; line-height: 1; padding: 2px 5px;
+  border-radius: 4px; transition: color 0.15s;
+}
+.btn-remove:hover { color: var(--red); }
+
+.pa-divider {
+  border: none;
+  border-top: 1px dashed var(--border);
+  margin: 14px 0;
+}
+
+.btn-add {
+  width: 100%; padding: 11px;
+  border: 1.5px dashed var(--border-dark);
+  background: none; border-radius: 8px;
+  font-family: 'Sarabun', sans-serif; font-size: 13px;
+  color: var(--text-muted); cursor: pointer;
+  transition: all 0.15s; margin-top: 4px;
+}
+.btn-add:hover {
+  border-color: var(--brown-light);
+  color: var(--brown);
+  background: var(--brown-pale);
+}
+
+.submit-wrap {
+  margin-top: 36px; padding-top: 24px;
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; gap: 16px;
+}
+.btn-submit {
+  background: var(--brown); color: #fff; border: none;
+  padding: 12px 32px; border-radius: 8px;
+  font-family: 'Sarabun', sans-serif; font-size: 15px; font-weight: 600;
+  cursor: pointer; transition: background 0.2s, transform 0.1s;
+  display: flex; align-items: center; gap: 8px;
+  min-width: 140px; justify-content: center;
+}
+.btn-submit:hover { background: #6a4c32; }
+.btn-submit:active { transform: scale(0.98); }
+.btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+.spinner {
+  width: 15px; height: 15px;
+  border: 2px solid rgba(255,255,255,0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: none;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.submit-note { font-size: 12px; color: var(--text-muted); line-height: 1.7; }
+
+.toast {
+  position: fixed; bottom: 28px; left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  padding: 12px 24px; border-radius: 8px;
+  font-size: 14px; font-weight: 500;
+  opacity: 0; transition: all 0.3s; pointer-events: none;
+  box-shadow: 0 8px 24px rgba(44,36,32,0.18);
+  z-index: 300; white-space: nowrap;
+}
+.toast.success { background: var(--green); color: #fff; }
+.toast.error   { background: var(--red);   color: #fff; }
+.toast.show    { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+.record-item {
+  background: var(--surface);
+  border: 1px solid var(--border); border-radius: 10px;
+  padding: 18px 20px; margin-bottom: 10px;
+}
+.rec-name  { font-weight: 600; font-size: 15px; color: var(--text); }
+.rec-meta  { font-size: 12px; color: var(--text-muted); margin: 3px 0 10px; }
+.rec-tags  { display: flex; flex-wrap: wrap; gap: 6px; }
+.rec-tag   {
+  font-size: 12px; background: var(--grey);
+  color: var(--text-mid); padding: 3px 10px;
+  border-radius: 20px; border: 1px solid var(--border);
+}
+.sync-note { font-size: 11px; color: var(--text-muted); text-align: center; margin-bottom: 14px; }
+.empty     { text-align: center; padding: 60px 20px; color: var(--text-muted); font-size: 14px; }
+
+@media (max-width: 540px) {
+  .row.col2, .row.col3 { grid-template-columns: 1fr; }
+  .top-bar { padding: 16px 20px; }
+  .submit-wrap { flex-direction: column; align-items: flex-start; }
+}
+</style>
 </head>
 <body>
-  <header class="site-header">
-    <nav class="nav">
-      <a class="brand" href="#">
-        <span class="brand-icon">S</span>
-        <span>
-          <strong>School Work Portal</strong>
-          <small>ระบบงานโรงเรียน</small>
-        </span>
-      </a>
 
-      <div class="nav-links">
-        <a href="#menu">เมนูระบบ</a>
-        <a href="#notice">ประกาศ</a>
-        <a href="#contact">ติดต่อ</a>
-      </div>
+<div class="top-bar">
+  <h1>บันทึกข้อตกลงการพัฒนางาน (PA)</h1>
+  <span class="sub">สำหรับครูและบุคลากรทางการศึกษา</span>
+  <span class="year-tag">ปีงบ 2569</span>
+</div>
 
-      <a class="nav-button" href="#menu">เข้าสู่ระบบงาน</a>
-    </nav>
-  </header>
+<div class="wrapper">
 
-  <main>
-    <section class="hero">
-      <div class="hero-content">
-        <div class="pill">ระบบรวมลิงก์สำหรับนักเรียนและครู</div>
-        <h1>ระบบงานโรงเรียนที่เรียบง่าย ใช้งานได้ทุกอุปกรณ์</h1>
-        <p>
-          รวมเช็กชื่อ ส่งงาน เอกสาร ตารางเรียน คะแนน และช่องทางติดต่อไว้ในหน้าเดียว
-          เหมาะสำหรับเปิดบนมือถือ iPad และคอมพิวเตอร์
-        </p>
-        <div class="hero-actions">
-          <a class="primary-button" href="#menu">เริ่มใช้งานระบบ</a>
-          <a class="secondary-button" href="#notice">ดูประกาศล่าสุด</a>
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('form', this)">กรอกข้อมูล</button>
+    <button class="tab" onclick="switchTab('records', this)">ข้อมูลที่บันทึก</button>
+  </div>
+
+  <!-- ═══ FORM ═══ -->
+  <div id="tab-form">
+
+    <div class="section">
+      <div class="section-label">ข้อมูลครู</div>
+      <div class="row col2">
+        <div class="field">
+          <label>ชื่อ–นามสกุล *</label>
+          <select id="f_name">
+            <option value="">เลือกชื่อ</option>
+            <option>นางอารีรัตน์ พรศิวกุลวงศ์</option>
+            <option>นางสาวพาขวัญ บัวคลี่</option>
+            <option>นางสาวมนสิชา ภักดิ์จัตุรัส</option>
+            <option>นางจุราภรณ์ เถียนหนู</option>
+            <option>นางพรศิริ หังสวนัส</option>
+            <option>นายอำนาจ เถียนหนู</option>
+            <option>นางสุนัตตา ศรีสม</option>
+            <option>นางสาวปาจรีวัณย์ เพชรวิเศษอุดม</option>
+            <option>นายปภังกร ไทยพงษ์</option>
+            <option>นางสาวจุฬาพร ชั้นขุนทด</option>
+            <option>นางสาวจุฑารัตน์ ชาติชนะ</option>
+            <option>นางสาวสมฤทัย ภูสระ</option>
+            <option>นายอาณุธิพงษ์ ร่มสุข</option>
+            <option>นางสาววาสนา เฝ้าหนองดู่</option>
+            <option>นายณัฐวุฒิ ประทุมวัน</option>
+            <option>นายเธียนไท แก่นนาค</option>
+            <option>นางสาวพรสวรรค์ ภูพันธ์หงษ์</option>
+            <option>นางสาวกฤติญาภรณ์ ท้าวจัตุรัส</option>
+            <option>นางสาวภาวินี ประเสริฐพงษ์</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>ตำแหน่ง / วิทยฐานะ *</label>
+          <select id="f_pos">
+            <option value="">เลือก</option>
+            <option>ครูผู้ช่วย</option>
+            <option>ครู</option>
+            <option>ครูชำนาญการ</option>
+            <option>ครูชำนาญการพิเศษ</option>
+            <option>ครูเชี่ยวชาญ</option>
+          </select>
         </div>
       </div>
-
-      <div class="phone-preview" aria-label="ตัวอย่างหน้าจอบนมือถือ">
-        <div class="phone-frame">
-          <div class="phone-screen">
-            <div class="phone-bar"></div>
-            <div class="phone-card">
-              <small>วันนี้</small>
-              <h3>ระบบงานโรงเรียน</h3>
-              <p>เลือกเมนูที่ต้องการใช้งาน</p>
-            </div>
-
-            <div class="phone-list">
-              <a href="#">📋 เช็กชื่อเข้าเรียน <span>›</span></a>
-              <a href="#">📤 ส่งงานนักเรียน <span>›</span></a>
-              <a href="#">📁 เอกสารประกอบการเรียน <span>›</span></a>
-              <a href="#">📅 ตารางเรียน <span>›</span></a>
-            </div>
-          </div>
+      <div class="row col2">
+        <div class="field">
+          <label>กลุ่มสาระ / สาขา *</label>
+          <select id="f_subj">
+            <option value="">เลือก</option>
+            <option>ภาษาไทย</option>
+            <option>คณิตศาสตร์</option>
+            <option>วิทยาศาสตร์และเทคโนโลยี</option>
+            <option>สังคมศึกษา ศาสนาและวัฒนธรรม</option>
+            <option>สุขศึกษาและพลศึกษา</option>
+            <option>ศิลปะ</option>
+            <option>การงานอาชีพ</option>
+            <option>ภาษาต่างประเทศ</option>
+            <option>ปฐมวัย</option>
+            <option>อื่น ๆ</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>ชื่อโรงเรียน / สถานศึกษา</label>
+          <input type="text" id="f_school" value="โรงเรียนชุมชนชวนวิทยา" readonly style="background:#f0ede8;color:var(--text-muted);cursor:default;">
         </div>
       </div>
-    </section>
+    </div>
 
-    <section id="menu" class="section">
-      <div class="section-title">
-        <div>
-          <small>Main Menu</small>
-          <h2>เมนูระบบงาน</h2>
-        </div>
-        <div class="update-pill">🔔 อัปเดตประกาศรายวัน</div>
+    <div class="section">
+      <div class="section-label">รายการ PA ที่จะดำเนินการ</div>
+      <div id="pa-list"></div>
+      <button class="btn-add" onclick="addPA()">+ เพิ่มรายการ PA</button>
+    </div>
+
+    <div class="submit-wrap">
+      <button class="btn-submit" id="btn-submit" onclick="submitForm()">
+        <span class="spinner" id="spinner"></span>
+        <span id="btn-label">ส่งข้อตกลง PA</span>
+      </button>
+      <span class="submit-note">ข้อมูลจะถูกบันทึกลง<br>Google Sheet ทันที</span>
+    </div>
+  </div>
+
+  <!-- ═══ RECORDS ═══ -->
+  <div id="tab-records" style="display:none">
+    <p class="sync-note">แสดงข้อมูลที่กรอกจากเครื่องนี้ · ข้อมูลทั้งหมดอยู่ใน Google Sheet</p>
+    <div id="records-list"></div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let paIdx = 0;
+
+const gradeOptions = [
+  'อนุบาล 1', 'อนุบาล 2', 'อนุบาล 3',
+  'ป.1', 'ป.2', 'ป.3', 'ป.4', 'ป.5', 'ป.6',
+];
+
+function addPA() {
+  paIdx++;
+  const n = paIdx;
+  const el = document.createElement('div');
+  el.className = 'pa-block';
+  el.id = `pa-${n}`;
+  el.innerHTML = `
+    <div class="pa-block-header">
+      <span class="pa-num">PA ${n}</span>
+      <button class="btn-remove" onclick="removePA(${n})">×</button>
+    </div>
+    <div class="row col1">
+      <div class="field">
+        <label>หัวข้อ / เรื่องที่จะทำ *</label>
+        <input type="text" class="pa-topic" placeholder="เช่น การพัฒนาทักษะการอ่าน">
       </div>
-
-      <div class="menu-grid">
-        <a class="menu-card" href="https://forms.google.com" target="_blank">
-          <div class="icon">📋</div>
-          <span>Google Form</span>
-          <h3>เช็กชื่อเข้าเรียน</h3>
-          <p>บันทึกเวลาเข้าเรียนประจำวัน</p>
-          <strong>เปิดเมนูนี้ ›</strong>
-        </a>
-
-        <a class="menu-card" href="https://forms.google.com" target="_blank">
-          <div class="icon">📤</div>
-          <span>ส่งงาน</span>
-          <h3>ส่งงานนักเรียน</h3>
-          <p>อัปโหลดไฟล์หรือส่งลิงก์งาน</p>
-          <strong>เปิดเมนูนี้ ›</strong>
-        </a>
-
-        <a class="menu-card" href="https://drive.google.com" target="_blank">
-          <div class="icon">📁</div>
-          <span>Drive</span>
-          <h3>เอกสารประกอบการเรียน</h3>
-          <p>ใบงาน สไลด์ และไฟล์ดาวน์โหลด</p>
-          <strong>เปิดเมนูนี้ ›</strong>
-        </a>
-
-        <a class="menu-card" href="https://sheets.google.com" target="_blank">
-          <div class="icon">📅</div>
-          <span>Schedule</span>
-          <h3>ตารางเรียน</h3>
-          <p>ดูตารางเรียนและกิจกรรมรายสัปดาห์</p>
-          <strong>เปิดเมนูนี้ ›</strong>
-        </a>
-
-        <a class="menu-card" href="https://sheets.google.com" target="_blank">
-          <div class="icon">📊</div>
-          <span>Sheet</span>
-          <h3>คะแนน / ผลงาน</h3>
-          <p>ติดตามคะแนนและสถานะงาน</p>
-          <strong>เปิดเมนูนี้ ›</strong>
-        </a>
-
-        <a class="menu-card" href="#contact">
-          <div class="icon">💬</div>
-          <span>Contact</span>
-          <h3>ติดต่อครูผู้สอน</h3>
-          <p>ช่องทางติดต่อและประกาศสำคัญ</p>
-          <strong>เปิดเมนูนี้ ›</strong>
-        </a>
+    </div>
+    <div class="row col1">
+      <div class="field">
+        <label>เป้าหมาย / สิ่งที่ต้องการให้เกิดขึ้น *</label>
+        <input type="text" class="pa-goal" placeholder="เช่น นักเรียนร้อยละ 75 ผ่านเกณฑ์">
       </div>
-    </section>
-
-    <section id="notice" class="notice">
-      <div>
-        <small>Official Notice</small>
-        <h2>ประกาศจากโรงเรียน</h2>
-        <p>
-          นักเรียนสามารถติดตามประกาศ ตารางกิจกรรม และลิงก์สำคัญได้จากหน้านี้
-          โดยระบบจะแสดงผลเหมาะกับมือถือและ iPad อัตโนมัติ
-        </p>
+    </div>
+    <hr class="pa-divider">
+    <div class="row col3">
+      <div class="field">
+        <label>ระดับชั้น *</label>
+        <select class="pa-grade">
+          <option value="">เลือก</option>
+          ${gradeOptions.map(g => `<option>${g}</option>`).join('')}
+        </select>
       </div>
-      <a href="#" class="notice-button">อ่านประกาศทั้งหมด</a>
-    </section>
+      <div class="field">
+        <label>จำนวนนักเรียน (คน) *</label>
+        <input type="number" class="pa-students" placeholder="เช่น 35" min="1">
+      </div>
+      <div class="field">
+        <label>หมายเหตุ <span class="opt">(ถ้ามี)</span></label>
+        <input type="text" class="pa-note" placeholder="เช่น ห้อง 3/2">
+      </div>
+    </div>
+  `;
+  document.getElementById('pa-list').appendChild(el);
+}
 
-    <section id="contact" class="contact">
-      <h2>ติดต่อครูผู้สอน</h2>
-      <p>LINE: @schoolportal &nbsp; | &nbsp; โทร: 000-000-0000</p>
-      <p class="hint">แก้ไขข้อความ เบอร์โทร และลิงก์ต่าง ๆ ได้ในไฟล์ index.html</p>
-    </section>
-  </main>
+function removePA(n) {
+  const el = document.getElementById(`pa-${n}`);
+  if (el) el.remove();
+}
 
-  <footer>
-    © 2026 School Work Portal. Designed for education use.
-  </footer>
+addPA();
+
+// ── Tabs ─────────────────────────────────────────
+function switchTab(tab, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-form').style.display    = tab === 'form'    ? 'block' : 'none';
+  document.getElementById('tab-records').style.display = tab === 'records' ? 'block' : 'none';
+  if (tab === 'records') renderRecords();
+}
+
+// ── Submit ────────────────────────────────────────
+function submitForm() {
+  const name   = document.getElementById('f_name').value;
+  const pos    = document.getElementById('f_pos').value;
+  const subj   = document.getElementById('f_subj').value;
+  const school = document.getElementById('f_school').value;
+
+  if (!name || !pos || !subj || !school) {
+    showToast('กรุณากรอกข้อมูลครูให้ครบถ้วน', 'error'); return;
+  }
+
+  const blocks = document.querySelectorAll('.pa-block');
+  if (!blocks.length) {
+    showToast('กรุณาเพิ่มรายการ PA อย่างน้อย 1 รายการ', 'error'); return;
+  }
+
+  const paItems = [];
+  let valid = true;
+
+  blocks.forEach(b => {
+    const topic = b.querySelector('.pa-topic').value.trim();
+    const goal     = b.querySelector('.pa-goal').value.trim();
+    const grade    = b.querySelector('.pa-grade').value;
+    const students = b.querySelector('.pa-students').value.trim();
+    const note     = b.querySelector('.pa-note').value.trim();
+
+    if (!topic || !goal || !grade || !students) { valid = false; return; }
+    paItems.push({ topic, goal, grade, students, note });
+  });
+
+  if (!valid) {
+    showToast('กรุณากรอกข้อมูลให้ครบทุก PA (หัวข้อ / เป้าหมาย / ระดับชั้น / จำนวนนักเรียน)', 'error'); return;
+  }
+
+  const btn = document.getElementById('btn-submit');
+  btn.disabled = true;
+  document.getElementById('spinner').style.display = 'block';
+  document.getElementById('btn-label').textContent = 'กำลังส่ง…';
+
+  const payload = {
+    timestamp:  new Date().toLocaleString('th-TH'),
+    name, pos, subj, school,
+    paCount:    paItems.length,
+    paTopics:   paItems.map(p => p.topic).join(' | '),
+    paGoals:    paItems.map(p => p.goal).join(' | '),
+    paGrades:   paItems.map(p => p.grade).join(' | '),
+    paStudents: paItems.map(p => p.students + ' คน').join(' | '),
+    paNotes:    paItems.map(p => p.note).join(' | '),
+  };
+
+  google.script.run
+    .withSuccessHandler(function () {
+      const local = JSON.parse(localStorage.getItem('pa2569') || '[]');
+      local.push({ ...payload, paItems });
+      localStorage.setItem('pa2569', JSON.stringify(local));
+      showToast('✓ ส่งข้อตกลง PA สำเร็จ', 'success');
+      resetForm();
+      resetBtn();
+    })
+    .withFailureHandler(function (err) {
+      showToast('เกิดข้อผิดพลาด: ' + (err.message || err), 'error');
+      resetBtn();
+    })
+    .savePA(payload);
+}
+
+function resetBtn() {
+  document.getElementById('btn-submit').disabled = false;
+  document.getElementById('spinner').style.display = 'none';
+  document.getElementById('btn-label').textContent = 'ส่งข้อตกลง PA';
+}
+
+function resetForm() {
+  ['f_name','f_pos','f_subj'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('pa-list').innerHTML = '';
+  paIdx = 0;
+  addPA();
+}
+
+// ── Toast ─────────────────────────────────────────
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `toast ${type} show`;
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// ── Records ───────────────────────────────────────
+function renderRecords() {
+  const all = JSON.parse(localStorage.getItem('pa2569') || '[]');
+  const c = document.getElementById('records-list');
+  if (!all.length) {
+    c.innerHTML = '<div class="empty">ยังไม่มีข้อมูลที่ส่งจากเครื่องนี้</div>'; return;
+  }
+  c.innerHTML = all.slice().reverse().map(r => `
+    <div class="record-item">
+      <div class="rec-name">${r.name}</div>
+      <div class="rec-meta">${r.pos} · ${r.subj} · ${r.school} &ensp;|&ensp; ${r.timestamp}</div>
+      <div class="rec-tags">
+        ${r.paItems.map(p =>
+          `<span class="rec-tag">${p.topic} · ${p.grade} · ${p.students} คน</span>`
+        ).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+</script>
 </body>
 </html>
