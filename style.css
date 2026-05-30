@@ -14,10 +14,7 @@
 body {
   margin: 0;
   min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px 12px;
+  padding: 0;
   font-family: "Noto Sans Thai", "Segoe UI", Tahoma, sans-serif;
   background: linear-gradient(180deg, #f3f7ff 0%, #dfe8ff 100%);
   color: var(--text-main);
@@ -25,17 +22,13 @@ body {
 
 .phone-frame {
   width: 100%;
-  max-width: 420px;
-  background: #0c0c0f;
-  border-radius: 48px;
-  padding: 14px;
-  box-shadow: 0 24px 60px rgba(10, 19, 61, 0.25);
+  min-height: 100vh;
+  background: transparent;
 }
 
 .phone-screen {
   background: var(--white);
-  border-radius: 34px;
-  min-height: 700px;
+  min-height: 100vh;
   padding: 24px 18px 20px;
   overflow: hidden;
 }
@@ -120,25 +113,17 @@ body {
   font-size: 13px;
 }
 
-@media (max-width: 520px) {
-  body {
-    padding: 0;
-    background: #0c0c0f;
-  }
-
-  .phone-frame {
-    max-width: none;
-    min-height: 100vh;
-    border-radius: 0;
-    padding: 0;
-    box-shadow: none;
-  }
-
+@media (min-width: 768px) {
   .phone-screen {
-    min-height: 100vh;
-    border-radius: 0;
+    padding: 32px;
   }
 
+  .menu-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
   .hero h1 {
     font-size: 26px;
   }
